@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+
+    h1 {
+      color: #e63946;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      position: relative;
+      height: 60px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    .yes {
+      background: #e63946;
+      color: white;
+      left: 30%;
+      z-index: 2;
+    }
+
+    .no {
+      background: #adb5bd;
+      color: white;
+      left: 55%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Heluu Sanzuuu❤️</h1>
+    <p>Will you be my Valentine?</p>
+
+    <div class="buttons">
+      <button class="yes" onclick="goYes()">Yes 💖</button>
+      <button class="no" onmouseenter="moveNo()">No 🙈</button>
+    </div>
+  </div>
+
+  <script>
+    function goYes() {
+      createConfetti();
+      createHearts();
+      setTimeout(() => {
+        window.location.href = "thankyou.html";
+      }, 2000);
+    }
+
+    function moveNo() {
+      const btn = document.querySelector('.no');
+      const card = document.querySelector('.card');
+
+      const maxX = card.clientWidth - btn.clientWidth;
+      const maxY = card.clientHeight - btn.clientHeight;
+
+      btn.style.left = Math.random() * maxX + "px";
+      btn.style.top = Math.random() * maxY + "px";
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const c = document.createElement("div");
+        c.style.position = "fixed";
+        c.style.width = "8px";
+        c.style.height = "8px";
+        c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.left = Math.random()*window.innerWidth + "px";
+        c.style.top = "-10px";
+        c.style.borderRadius = "50%";
+        document.body.appendChild(c);
+
+        c.animate(
+          [{ transform: "translateY(0)" },
+           { transform: `translateY(${window.innerHeight}px)` }],
+          { duration: 2500 }
+        ).onfinish = () => c.remove();
+      }
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 20; i++) {
+        const h = document.createElement("div");
+        h.innerHTML = "❤️";
+        h.style.position = "fixed";
+        h.style.left = Math.random()*window.innerWidth + "px";
+        h.style.top = window.innerHeight + "px";
+        h.style.fontSize = "24px";
+        document.body.appendChild(h);
+
+        h.animate(
+          [{ transform: "translateY(0)", opacity: 1 },
+           { transform: `translateY(-${window.innerHeight}px)`, opacity: 0 }],
+          { duration: 2500 }
+        ).onfinish = () => h.remove();
+      }
+    }
+  </script>
+</body>
+</html>
